@@ -12,7 +12,7 @@ import {
   GridRowsProp,
   GridRowModesModel,
   GridRowModes,
-  DataGridPro,
+  DataGrid,
   GridColumns,
   GridRowParams,
   MuiEvent,
@@ -21,7 +21,7 @@ import {
   GridEventListener,
   GridRowId,
   GridRowModel,
-} from "@mui/x-data-grid-pro";
+} from "@mui/x-data-grid";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -135,6 +135,21 @@ export default function Home() {
       width: 160,
     },
     {
+      field: "managerId",
+      headerName: "Manager ID",
+      description: "This column has a value getter and is not sortable.",
+      sortable: true,
+      editable: true,
+      width: 160,
+    },
+    {
+      field: "departmentId",
+      headerName: "Department ID",
+      description: "This column has a value getter and is not sortable.",
+      sortable: true,
+      width: 160,
+    },
+    {
       field: "actions",
       type: "actions",
       headerName: "Actions",
@@ -209,7 +224,7 @@ export default function Home() {
           </Typography>
         </Box>
         <Box style={{ height: 400, width: "100%" }}>
-          <DataGridPro
+          <DataGrid
             rows={rows}
             getRowId={(row) => row.id}
             rowModesModel={rowModesModel}
