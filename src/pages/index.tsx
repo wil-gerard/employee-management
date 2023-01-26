@@ -22,6 +22,7 @@ import {
   GridRowId,
   GridRowModel,
 } from "@mui/x-data-grid";
+import useLocalStorageState from "use-local-storage-state";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -48,10 +49,13 @@ function EditToolbar(props: EditToolbarProps) {
 
   const handleClick = () => {
     const id = makeId(8);
-    setRows((oldRows) => [...oldRows, { id, firstName: '', lastName: '', isNew: true }]);
+    setRows((oldRows) => [
+      ...oldRows,
+      { id, firstName: "", lastName: "", isNew: true },
+    ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
     }));
   };
 
@@ -65,17 +69,22 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 export default function Home() {
-  const [rows, setRows] = useState(UserData.people);
+  const [rows, setRows] = useLocalStorageState("rows", {
+    defaultValue: UserData.people,
+  });
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const handleRowEditStart = (
     params: GridRowParams,
-    event: MuiEvent<React.SyntheticEvent>,
+    event: MuiEvent<React.SyntheticEvent>
   ) => {
     event.defaultMuiPrevented = true;
   };
 
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
+    params,
+    event
+  ) => {
     event.defaultMuiPrevented = true;
   };
 
@@ -130,14 +139,12 @@ export default function Home() {
     {
       field: "jobTitle",
       headerName: "Job title",
-      description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
     },
     {
       field: "managerId",
       headerName: "Manager ID",
-      description: "This column has a value getter and is not sortable.",
       sortable: true,
       editable: true,
       width: 160,
@@ -145,7 +152,7 @@ export default function Home() {
     {
       field: "departmentId",
       headerName: "Department ID",
-      description: "This column has a value getter and is not sortable.",
+      editable: true,
       sortable: true,
       width: 160,
     },
@@ -171,7 +178,7 @@ export default function Home() {
               className="textPrimary"
               onClick={handleCancelClick(id)}
               color="inherit"
-            />
+            />,
           ];
         }
 
@@ -188,9 +195,9 @@ export default function Home() {
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
-          />
+          />,
         ];
-      }
+      },
     },
   ];
 
@@ -223,7 +230,7 @@ export default function Home() {
             </Link>
           </Typography>
         </Box>
-        <Box style={{ height: 400, width: "100%" }}>
+        <Box style={{ height: 450, width: "100%" }}>
           <DataGrid
             rows={rows}
             getRowId={(row) => row.id}
