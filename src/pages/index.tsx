@@ -31,6 +31,13 @@ interface EditToolbarProps {
   ) => void;
 }
 
+interface data {
+  firstName : string,
+  lastName: string,
+  departmentId: string,
+  managerId?: string
+}
+
 function makeId(length: number) {
   let result = "";
   const characters =
@@ -51,7 +58,7 @@ function EditToolbar(props: EditToolbarProps) {
     const id = makeId(8);
     setRows((oldRows) => [
       ...oldRows,
-      { id, firstName: "", lastName: "", isNew: true },
+      { id, firstName: "", lastName: "" },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -105,15 +112,10 @@ export default function Home() {
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
-
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
+    const updatedRow = { ...newRow as data };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -139,13 +141,12 @@ export default function Home() {
     {
       field: "jobTitle",
       headerName: "Job title",
-      sortable: false,
       width: 160,
+      editable: true
     },
     {
       field: "managerId",
       headerName: "Manager ID",
-      sortable: true,
       editable: true,
       width: 160,
     },
@@ -153,7 +154,6 @@ export default function Home() {
       field: "departmentId",
       headerName: "Department ID",
       editable: true,
-      sortable: true,
       width: 160,
     },
     {
