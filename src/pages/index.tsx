@@ -70,7 +70,6 @@ export default function Home() {
     defaultValue: UserData.people,
   });
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const [pageSize, setPageSize] = useState<number>(10);
 
   const handleRowEditStart = (
     params: GridRowParams,
@@ -237,12 +236,10 @@ export default function Home() {
             onRowEditStop={handleRowEditStop}
             processRowUpdate={processRowUpdate}
             columns={columns}
-            pageSize={pageSize}
+            pageSize={5}
             editMode="row"
             rowsPerPageOptions={[5, 10, 15]}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             experimentalFeatures={{ newEditingApi: true }}
-            autoHeight
             components={{
               Toolbar: EditToolbar,
             }}
