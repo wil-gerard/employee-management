@@ -32,21 +32,23 @@ npm run dev
 
 ## Goals
 
-[] Use Typescript
+- [x] Use Typescript
 
-[] Users can create an employee
+- [x] Users can create an employee
 
-[] Users can delete an employee
+- [x] Users can delete an employee
 
-[] Users can update an employee
+- [x] Users can update an employee
 
-[] Users can search for an employee
+- [x] Users can search for an employee
 
-[] Use local storage to persist data
+- [x] Use local storage to persist data
 
-[] Users can assign an employee to a team
+- [x] Users can assign an employee to a team
 
-[] Write Cypress inegration tests
+- [ ] Write Cypress inegration tests
+
+- [ ] Refactor code into smaller components
 
 ## Summary
 
