@@ -49,10 +49,7 @@ function EditToolbar(props: EditToolbarProps) {
 
   const handleClick = () => {
     const id = makeId(8);
-    setRows((oldRows) => [
-      ...oldRows,
-      { id, firstName: "", lastName: "" },
-    ]);
+    setRows((oldRows) => [...oldRows, { id, firstName: "", lastName: "" }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
@@ -73,6 +70,7 @@ export default function Home() {
     defaultValue: UserData.people,
   });
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const [pageSize, setPageSize] = useState<number>(10);
 
   const handleRowEditStart = (
     params: GridRowParams,
@@ -109,12 +107,12 @@ export default function Home() {
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = newRow;
-    const updated = [...rows, {...newRow}]
     // @ts-ignore
-    //setRows updates the local storage persisted state
-    setRows(updated);
+    //setRows updates the local storage persisted state row if it exists
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
+
   const columns: GridColumns = [
     {
       field: "id",
@@ -138,7 +136,7 @@ export default function Home() {
       field: "jobTitle",
       headerName: "Job title",
       width: 160,
-      editable: true
+      editable: true,
     },
     {
       field: "managerId",
@@ -230,7 +228,7 @@ export default function Home() {
             </Link>
           </Typography>
         </Box>
-        <Box style={{ height: 450, width: "100%" }}>
+        <Box style={{ width: "100%" }}>
           <DataGrid
             rows={rows}
             getRowId={(row) => row.id}
@@ -239,10 +237,12 @@ export default function Home() {
             onRowEditStop={handleRowEditStop}
             processRowUpdate={processRowUpdate}
             columns={columns}
-            pageSize={5}
+            pageSize={pageSize}
             editMode="row"
             rowsPerPageOptions={[5, 10, 15]}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             experimentalFeatures={{ newEditingApi: true }}
+            autoHeight
             components={{
               Toolbar: EditToolbar,
             }}
