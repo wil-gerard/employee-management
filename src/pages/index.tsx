@@ -3,57 +3,24 @@ import { Box, Container, Typography, Link, Button } from "@mui/material";
 import { AcUnit } from "@mui/icons-material";
 import { UserData } from "@/data/UserDataJson";
 import { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import {
-  GridRowsProp,
   GridRowModesModel,
   GridRowModes,
   DataGrid,
   GridColumns,
   GridRowParams,
   MuiEvent,
-  GridToolbarContainer,
   GridActionsCellItem,
   GridEventListener,
   GridRowId,
   GridRowModel,
 } from "@mui/x-data-grid";
-import {
-  randomId,
-} from '@mui/x-data-grid-generator';
 import useLocalStorageState from "use-local-storage-state";
-
-interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel
-  ) => void;
-}
-
-function EditToolbar(props: EditToolbarProps) {
-  const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, firstName: "", lastName: "" }]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-    }));
-  };
-
-  return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add employee
-      </Button>
-    </GridToolbarContainer>
-  );
-}
+import EditToolbar from "@/components/EditToolbar";
 
 export default function Home() {
   const [rows, setRows] = useLocalStorageState("rows", {
