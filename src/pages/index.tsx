@@ -31,13 +31,6 @@ interface EditToolbarProps {
   ) => void;
 }
 
-interface data {
-  firstName : string,
-  lastName: string,
-  departmentId: string,
-  managerId?: string
-}
-
 function makeId(length: number) {
   let result = "";
   const characters =
@@ -69,7 +62,7 @@ function EditToolbar(props: EditToolbarProps) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
+        Add employee
       </Button>
     </GridToolbarContainer>
   );
@@ -115,8 +108,11 @@ export default function Home() {
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow as data };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    const updatedRow = newRow;
+    const updated = [...rows, {...newRow}]
+    // @ts-ignore
+    //setRows updates the local storage persisted state
+    setRows(updated);
     return updatedRow;
   };
   const columns: GridColumns = [
