@@ -198,6 +198,7 @@ export default function Home() {
             rowsPerPageOptions={[5, 10, 15]}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             autoHeight
+            experimentalFeatures={{ newEditingApi: true }}
             components={{
               Toolbar: EditToolbar,
             }}
