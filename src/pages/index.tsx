@@ -17,7 +17,6 @@ import {
   GridActionsCellItem,
   GridEventListener,
   GridRowId,
-  GridRowModel,
 } from "@mui/x-data-grid";
 import useLocalStorageState from "use-local-storage-state";
 import EditToolbar from "@/components/EditToolbar";
