@@ -6,3 +6,12 @@ export interface EditToolbarProps {
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel
   ) => void;
 }
+
+export interface Row {
+  id: string;
+  firstName: string;
+  lastName: string;
+  jobTitle: string;
+  departmentId: string;
+  managerId?: string;
+}
