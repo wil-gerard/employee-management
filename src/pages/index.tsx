@@ -70,6 +70,16 @@ export default function Home() {
     return updatedRow;
   };
 
+  const getDepartmentName = (id: string) => {
+    const department = UserData.departments.find((department) => department.id === id);
+    return department?.name;
+  }
+
+  const getManagerName = (id: string) => {
+    const manager = UserData.people.find((manager) => manager.id === id);
+    return manager ? `${manager?.firstName} ${manager?.lastName}` : null;
+  }
+
   const columns: GridColumns = [
     {
       field: "id",
@@ -97,15 +107,17 @@ export default function Home() {
     },
     {
       field: "managerId",
-      headerName: "Manager ID",
+      headerName: "Manager",
       editable: true,
       width: 160,
+      valueFormatter: (params) => getManagerName(params.value)
     },
     {
       field: "departmentId",
-      headerName: "Department ID",
+      headerName: "Department",
       editable: true,
       width: 160,
+      valueFormatter: (params) => getDepartmentName(params.value)
     },
     {
       field: "actions",
