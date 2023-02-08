@@ -17,10 +17,10 @@ import {
   GridActionsCellItem,
   GridEventListener,
   GridRowId,
-  GridRowModel,
 } from "@mui/x-data-grid";
 import useLocalStorageState from "use-local-storage-state";
 import EditToolbar from "@/components/EditToolbar";
+import { Row } from "@/types";
 
 export default function Home() {
   const [rows, setRows] = useLocalStorageState("rows", {
@@ -62,12 +62,9 @@ export default function Home() {
     });
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = newRow;
-    // @ts-ignore
-    //setRows updates the local storage persisted state row if it exists
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
+  const processRowUpdate = (newRow: Row) => {
+    setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+    return newRow;
   };
 
   const columns: GridColumns = [
